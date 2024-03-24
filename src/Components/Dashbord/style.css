@@ -1,0 +1,11 @@
+.spin-wheel-main-div {
+    display: flex !important;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 500px) {
+    .spin-wheel-main-div {
+        flex-direction: column; /* or any other value you desire */
+    }
+}
