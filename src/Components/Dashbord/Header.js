@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -6,12 +6,31 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import { Link as ReactRouterLink } from 'react-router-dom';
+import SignInModal from '../CustomerSignIn';
+import { useSelector, useDispatch } from 'react-redux'
+import { signOut } from '../../redux/Authentication/AuthSlice';
 
 function Header(props) {
   const { sections, title } = props;
+  const [openSignInModal, setOpenSignInModal] = useState(false)
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+
+
+  const handelSignIn = () => {
+    if (auth.isAuthenticated) {
+      dispatch(signOut());
+      localStorage.removeItem('token');
+    } else {
+      setOpenSignInModal(true)
+    }
+  }
 
   return (
     <React.Fragment>
+      <SignInModal openSignInModal={openSignInModal} setOpenSignInModal={setOpenSignInModal} />
+
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Button size="small">Subscribe</Button>
         <Typography
@@ -27,8 +46,8 @@ function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Button variant="outlined" size="small">
-          Sign up
+        <Button variant="outlined" size="small" onClick={handelSignIn}>
+          {auth.isAuthenticated ? 'Sign Out' : 'Sign in'}
         </Button>
       </Toolbar>
       <Toolbar

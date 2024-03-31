@@ -18,7 +18,7 @@ const style = {
 };
 
 export default function CongratModal({
-  open, setOpen, result1, result3, result2
+  open, setOpen, result1, result3, result2,setOpenSignUpModal
 }) {
 
   const handleOpen = () => setOpen(true);
@@ -28,6 +28,11 @@ export default function CongratModal({
     console.log('result1,result2,result3 inside ', { result1, result2, result3 })
   }, [result1, result2, result3])
 
+  const handelContinue = () =>{
+    setOpen(false);
+    setOpenSignUpModal(true)
+  }
+  
   return (
     <div>
       <Modal
@@ -37,9 +42,6 @@ export default function CongratModal({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-            The Spin game
-          </Typography> */}
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <div class="card">
               <div class="text-right cross"> <i class="fa fa-times"></i> </div>
@@ -47,8 +49,8 @@ export default function CongratModal({
                 <img src="https://img.icons8.com/bubbles/200/000000/trophy.png" />
                 <h4>CONGRATULATIONS!</h4>
                 <p>You have Won the Luckey Draw</p>
-                {/* <button onClick={handleClose} class="btn btn-out btn-square continue">CONTINUE</button> */}
-                <Button onClick={handleClose} variant="outlined">CONTINUE</Button>
+                <p>please continue to clam the reward</p>
+                <Button onClick={handelContinue} variant="outlined">CONTINUE</Button>
 
               </div>
             </div>
